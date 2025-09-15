@@ -1,10 +1,9 @@
 import {List} from "../../components/TodoList"
-import {ToDoForm} from "../../components/TodoForm"
 
 export default function Home() {
   return (
-    <div>
-      <h1>To-Do</h1>
+    <div className="flex flex-col items-center">
+      <h1 className="font-bold text-5xl">To-Do</h1>
       <List />
     </div>
   );

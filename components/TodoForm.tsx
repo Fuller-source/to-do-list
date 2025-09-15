@@ -18,7 +18,7 @@ export const TodoForm = ({onAdd}: {onAdd: (task: string) => void }) => {
                 value={taskToDo}
                 onChange={(e) => setTaskToDo(e.target.value)}
             />
-            <button type="submit">+</button>
+            <button className="bg-white text-black rounded p-1" type="submit">+</button>
         </form>
     );
 }
