@@ -12,7 +12,7 @@ export const TodoItem = ({todo, onDelete}: TodoItemProps) => {
     
 
     return (
-        <li className="bg-blue-500 text-white p-2 rounded al">
+        <li className="bg-yellow-200 text-black p-2 rounded al">
             {todo.task}
             <button className="hover:bg-amber-600" onClick={() => onDelete(todo.id)}>-</button>
         </li>
