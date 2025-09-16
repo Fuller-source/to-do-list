@@ -35,6 +35,10 @@ export function List(){
         localStorage.setItem("todos", JSON.stringify(todos));
     },[todos])
 
+    /**
+     * This function is called when a new task is submitted. It modifies the state in an immutable way.
+     * It creates a new Todo object, uses spread operator to create new array with old tasks plus new one.
+     */
     function handleAddTask(newTask: string){
         const todoItem = {
             id: Date.now(),
@@ -44,11 +48,21 @@ export function List(){
         setTodos([...todos, todoItem])
     }
 
+    /**
+     * Recieves a to-do item's id and uses filter to create a new array
+     * with every todo that does not match the one with id
+     */
     function handleDeleteTask(id: number){
         const newTodos = todos.filter(task => task.id != id)
         setTodos(newTodos)
     }
 
+    /**
+     * Called when a task is checked or unchecked. Uses map method
+     * to iterate over the todos array and create a new array. 
+     * If the task has the matching id, it uses the spread 
+     * operator to create a new object with the completed status toggled.
+     */
     function handleCompleteTask(id: number){
         const newTodos = todos.map(task => {
             if (task.id === id){
@@ -65,6 +79,7 @@ export function List(){
     return(
             <ul>
                 {todos.map((todo) => (
+                    // Three props are passed. todo: data for specific item. key: uid for React to track them. onDelete/onComplete allow the child comp to comm with parent and modify state.
                     <TodoItem todo={todo} key={todo.id} onDelete={() => handleDeleteTask(todo.id)} onComplete={() => handleCompleteTask(todo.id)} />
                 ))}
                 <TodoForm onAdd={handleAddTask}/>
