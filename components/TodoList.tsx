@@ -1,13 +1,10 @@
 'use client' // tells next that the componenet needs to run in browser, giving it access to browser APIs like local storage
-'use client' // tells next that the componenet needs to run in browser, giving it access to browser APIs like local storage
 
-import React, {useEffect, useState} from 'react'
 import React, {useEffect, useState} from 'react'
 import { TodoForm } from './TodoForm'
 import { TodoItem } from './TodoItem'
 import { todo } from 'node:test'
 
-export interface Todo{ // This is what makes ts valuable.
 export interface Todo{ // This is what makes ts valuable.
     id: number
     task: string
