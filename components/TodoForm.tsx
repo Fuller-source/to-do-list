@@ -12,13 +12,14 @@ export const TodoForm = ({onAdd}: {onAdd: (task: string) => void }) => {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-           <input 
+        <form className="flex" onSubmit={handleSubmit}>
+           <input
+                className="border-gray-300 border-1 bg-white p-2 rounded-md flex-grow text-black focus:outline-none focus:ring-fuchsia-600"
                 type="text"
                 value={taskToDo}
                 onChange={(e) => setTaskToDo(e.target.value)}
             />
-            <button className="bg-white text-black rounded p-1" type="submit">+</button>
+            <button className="bg-blue-300 text-black rounded p-1 flex-auto" type="submit">+</button>
         </form>
     );
 }

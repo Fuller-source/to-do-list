@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Annie+Use+Your+Telescope&family=Bungee+Shade&family=Lusitana:wght@400;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import "tailwindcss";
 
 
@@ -16,6 +16,12 @@
 
 @theme {
   --font-display: "Bungee Shade", sans-serif;
+  --color-*: initial;
+  --color-onyx: #32373B;
+  --color-outerspace: #4a5859;
+  --color-paledogwood: #f4d6cc;
+  --color-emerald: #59cd90;
+  --color-blue: #3fa7d6;
 }
 
 body {
