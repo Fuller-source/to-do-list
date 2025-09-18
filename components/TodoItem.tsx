@@ -14,13 +14,13 @@ export const TodoItem = ({todo, onDelete, onComplete}: TodoItemProps) => {
     
 
     return (
-        <li className="bg-yellow-200 text-black p-2 rounded">
+        <li className="flex bg-paledogwood text-black p-2 rounded flex-wrap w-full max-w-xl">
             <input type="checkbox" checked={todo.completed} name="status"  value={todo.id} onChange={() => onComplete(todo.id)}/>
-            <span className={todo.completed ? 'line-through' : ''}>
+            <span className={`break-words ${todo.completed ? 'line-through' : ''} w-full`}>
                 {todo.task}
             </span>
-            
-            <button className="hover:bg-amber-600" onClick={() => onDelete(todo.id)}>-</button>
+
+            <button className="hover:bg-emerald" onClick={() => onDelete(todo.id)}>-</button>
         </li>
     )
 }
