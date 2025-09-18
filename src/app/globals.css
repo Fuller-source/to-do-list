@@ -3,16 +3,16 @@
 
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #171717;
+  --foreground: #FFFFFF;
 }
 
-@media (prefers-color-scheme: dark) {
+/*@media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
-}
+}*/
 
 @theme {
   --font-display: "Bungee Shade", sans-serif;
@@ -22,6 +22,7 @@
   --color-paledogwood: #f4d6cc;
   --color-emerald: #59cd90;
   --color-blue: #3fa7d6;
+  --color-black: #---
 }
 
 body {

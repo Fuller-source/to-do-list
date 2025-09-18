@@ -14,7 +14,7 @@ export const TodoItem = ({todo, onDelete, onComplete}: TodoItemProps) => {
     
 
     return (
-        <li className="bg-yellow-200 text-black p-2 rounded al">
+        <li className="bg-yellow-200 text-black p-2 rounded">
             <input type="checkbox" checked={todo.completed} name="status"  value={todo.id} onChange={() => onComplete(todo.id)}/>
             <span className={todo.completed ? 'line-through' : ''}>
                 {todo.task}
