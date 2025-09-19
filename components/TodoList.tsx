@@ -76,14 +76,20 @@ export function List(){
         setTodos(newTodos)
     }
 
-    return(
+    return (
+        <div className="w-full max-w-md">
             <ul>
                 {todos.map((todo) => (
-                    // Three props are passed. todo: data for specific item. key: uid for React to track them. onDelete/onComplete allow the child comp to comm with parent and modify state.
-                    <TodoItem todo={todo} key={todo.id} onDelete={() => handleDeleteTask(todo.id)} onComplete={() => handleCompleteTask(todo.id)} />
+                    <TodoItem
+                        todo={todo}
+                        key={todo.id}
+                        onDelete={() => handleDeleteTask(todo.id)}
+                        onComplete={() => handleCompleteTask(todo.id)}
+                    />
                 ))}
-                <TodoForm onAdd={handleAddTask}/>
             </ul>
+            <TodoForm onAdd={handleAddTask} />
+        </div>
     )   
 }
 

@@ -22,13 +22,13 @@
   --color-paledogwood: #f4d6cc;
   --color-emerald: #59cd90;
   --color-blue: #3fa7d6;
-  --color-black: #000000
-  --color-white: #FFFFFF
+  --color-black: #000000;
+  --color-white: #FFFFFF;
+  --color-red: #7c0a02;
 }
 
 body {
   background: var(--background);
-  color: var(--foreground);
 }
 
 

@@ -12,14 +12,14 @@ export const TodoForm = ({onAdd}: {onAdd: (task: string) => void }) => {
     }
 
     return (
-        <form className="flex bg-onyx focus-within:ring-2 focus-within:ring-blue rounded-md text-white" onSubmit={handleSubmit}>
+        <form className="flex border border-emerald bg-onyx items-stretch justify-between w-full focus-within:ring-2 focus-within:ring-blue rounded-md text-white p-2" onSubmit={handleSubmit}>
         <input
-                className="border-l border-y border-gray-300 rounded-l-md py-2flex-grow p-1.5 focus:outline-none"
+                className=" rounded-l-md py-2 flex-grow p-1.5 focus:outline-none"
                 type="text"
                 value={taskToDo}
                 onChange={(e) => setTaskToDo(e.target.value)}
             />
-            <button className="bg-onyx border-r border-y border-gray-300 hover:bg-emerald rounded-r-md -ml-1 py-2 px-4 text-white flex justify-center items-center" type="submit">+</button>
+            <button className="bg-onyx  hover:bg-emerald rounded-r-md px-4 text-white" type="submit">+</button>
         </form> 
     );
 }
