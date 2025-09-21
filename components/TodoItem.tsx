@@ -12,14 +12,14 @@ interface TodoItemProps{
 
 export const TodoItem = ({todo, onDelete, onComplete}: TodoItemProps) => {
     return (
-        <li className="flex items-stretch justify-between bg-paledogwood  rounded w-full">
+        <li className="my-1 border-black border-5 flex items-stretch rounded-2xl justify-between bg-paledogwood min-h-[58px] w-full">
             <input
                 type="checkbox"
                 checked={todo.completed}
                 name="status"
                 value={todo.id}
                 onChange={() => onComplete(todo.id)}
-                className="accent-emerald"
+                className="accent-emerald p-4 m-4 self-center"
             />
             <span
                 className={`ml-2 text-black ${todo.completed ? 'line-through' : ''} w-0 flex-1 break-words`}
@@ -27,7 +27,7 @@ export const TodoItem = ({todo, onDelete, onComplete}: TodoItemProps) => {
                 {todo.task}
             </span>
             <button
-                className="hover:bg-red hover:text-white rounded-r-md px-4 text-black ml-4"
+                className="hover:bg-red hover:text-white rounded-r-lg px-4 text-black ml-4"
                 onClick={() => onDelete(todo.id)}
             >
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
