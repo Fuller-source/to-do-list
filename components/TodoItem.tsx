@@ -13,21 +13,45 @@ interface TodoItemProps{
 export const TodoItem = ({todo, onDelete, onComplete}: TodoItemProps) => {
     return (
         <li className="my-1 border-black border-5 flex items-stretch rounded-2xl justify-between bg-paledogwood min-h-[58px] w-full">
-            <input
-                type="checkbox"
-                checked={todo.completed}
-                name="status"
-                value={todo.id}
-                onChange={() => onComplete(todo.id)}
-                className="accent-emerald p-4 m-4 self-center"
-            />
+            <label className="flex items-center p-4 cursor-pointer">
+                <input
+                    type="checkbox"
+                    checked={todo.completed}
+                    onChange={() => onComplete(todo.id)}
+                    className="peer sr-only"
+                />
+                
+                {/* Corrected 'transition-all' to the standard 'transition' class */}
+                <div className="relative w-6 h-6 bg-white border-2 border-black rounded-md
+                                peer-checked:bg-emerald peer-checked:border-emerald
+                                transition duration-200 ease-in-out">
+                    {/* SIMPLIFICATION: 
+                      Removed the JS ternary. Now the opacity is controlled purely by CSS
+                      based on the peer input's checked state.
+                    */}
+                    <svg
+                        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 text-white
+                                   opacity-0 peer-checked:opacity-100 transition-opacity"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                        aria-hidden="true"
+                    >
+                        <path
+                            fillRule="evenodd"
+                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                            clipRule="evenodd"
+                        />
+                    </svg>
+                </div>
+            </label>
             <span
-                className={`ml-2 text-black ${todo.completed ? 'line-through' : ''} w-0 flex-1 break-words`}
+                className={`ml-2 text-black py-1 ${todo.completed ? 'line-through' : ''} w-0 flex-1 break-words`}
             >
                 {todo.task}
             </span>
             <button
-                className="hover:bg-red hover:text-white rounded-r-lg px-4 text-black ml-4"
+                className="hover:bg-red hover:text-white rounded-r-lg px-4 text-black ml-4 transition ease-in-out duration-200"
                 onClick={() => onDelete(todo.id)}
             >
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">

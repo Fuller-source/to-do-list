@@ -12,14 +12,24 @@ export const TodoForm = ({onAdd}: {onAdd: (task: string) => void }) => {
     }
 
     return (
-        <form className="flex border border-emerald bg-onyx items-stretch justify-between w-full focus-within:ring-2 focus-within:ring-blue rounded-md text-white p-2" onSubmit={handleSubmit}>
-        <input
-                className=" rounded-l-md py-2 flex-grow p-1.5 focus:outline-none"
+        // 1. Removed p-2 from the form
+        <form className="flex my-1 border-black border-5 rounded-2xl bg-onyx items-stretch justify-between w-full focus-within:ring-2 focus-within:ring-blue" onSubmit={handleSubmit}>
+            <input
+                // 2. Added padding, background, and text color to the input
+                placeholder="Add a new task..."
+                className="bg-onyx rounded-l-xl p-4 flex-1 focus:outline-none text-white"
                 type="text"
                 value={taskToDo}
                 onChange={(e) => setTaskToDo(e.target.value)}
             />
-            <button className="bg-onyx  hover:bg-emerald rounded-r-md px-4 text-white" type="submit">+</button>
+            {/* 3. Removed ml-4 and bg-onyx, and adjusted rounding to match the form */}
+            <button 
+                className="hover:bg-emerald rounded-r-xl px-4 text-white transition ease-in-out duration-200 w-12 
+               flex items-center justify-center" 
+                type="submit"
+            >
+                +
+            </button>
         </form> 
     );
 }
