@@ -1,16 +1,26 @@
-'use client' // tells next that the componenet needs to run in browser, giving it access to browser APIs like local storage
+'use client' // This tells next that the component needs to run in browser, giving it access to browser APIs like local storage
+             // This is essential because this component uses useState and useEffect, which are client-side hooks.
 
 import React, {useEffect, useState} from 'react'
 import { TodoForm } from './TodoForm'
 import { TodoItem } from './TodoItem'
-import { todo } from 'node:test'
 
-export interface Todo{ // This is what makes ts valuable.
+/**
+ * Defining the shape of a to-do item using a TypeScript interface.
+ * This is what makes ts valuable.
+ * It is valuable because it provides type safety and autocompletion.
+ * This interface is used in multiple places, so I export it?
+ */
+export interface Todo{
     id: number
     task: string
     completed: boolean
 }
-
+/**
+ * @returns The List component is the main interactive part of the to-do app.
+ * It manages the state of the to-do items, handles adding, deleting, and completing tasks,
+ * and renders the list of tasks along with the form to add new ones.
+ */
 export function List(){
     const [todos, setTodos] = useState<Todo[]>([]); // initializes the component's state. todos holds the list of tasks. setTodos is the function I use to update it.
 
@@ -29,19 +39,19 @@ export function List(){
     /**
      * This hook handles saving data.
      * This runs every time a variable in its dependency array changes [todos]
-     * The code converts the todos array to a string and saves it to localStorage, to ensure persistance.
+     * The code converts the todos array to a string and saves it to localStorage, to ensure persistence.
      */
     useEffect(() => {
         localStorage.setItem("todos", JSON.stringify(todos));
-    },[todos])
+    },[todos]) // runs whenever todos changes
 
     /**
      * This function is called when a new task is submitted. It modifies the state in an immutable way.
      * It creates a new Todo object, uses spread operator to create new array with old tasks plus new one.
      */
     function handleAddTask(newTask: string){
-        const todoItem = {
-            id: Date.now(),
+        const todoItem = { 
+            id: Date.now(), // Using timestamp as a simple unique id for each task
             task: newTask,
             completed: false,
         };
@@ -53,7 +63,7 @@ export function List(){
      * with every todo that does not match the one with id
      */
     function handleDeleteTask(id: number){
-        const newTodos = todos.filter(task => task.id != id)
+        const newTodos = todos.filter(task => task.id != id) // filter returns a new array, so this is immutable
         setTodos(newTodos)
     }
 
@@ -64,34 +74,37 @@ export function List(){
      * operator to create a new object with the completed status toggled.
      */
     function handleCompleteTask(id: number){
-        const newTodos = todos.map(task => {
+        const newTodos = todos.map(task => { 
             if (task.id === id){
-                if (task.completed == false){
-                    return {...task, completed: true} // ... copies all existing properties, and then I override the completed property with true, to ensure immutability.
-                }
-                return {...task, completed: false}
+                return {...task, completed: !task.completed} // ... copies all existing properties, and then I override the completed property with true, to ensure immutability.
             } 
-            return task
+            return task // for all other tasks, return them unchanged
         });
         setTodos(newTodos)
     }
 
+    /**
+     * The component's render method. It returns JSX that defines the UI.
+     * It maps over the todos array to render a TodoItem for each task,
+     * passing down the necessary props and handlers.
+     * It also includes the TodoForm component for adding new tasks.
+     */
     return (
         <div className="w-full max-w-md">
             <ul>
                 {todos.map((todo) => (
+                    // This component represents a single to-do item in the list. It receives the todo object and the handlers as props. It passes the id to the handlers so they know which task to act on. The onDelete and onComplete props are functions that get called when the user interacts with the item.
                     <TodoItem
                         todo={todo}
-                        key={todo.id}
-                        onDelete={() => handleDeleteTask(todo.id)}
+                        key={todo.id} // React requires a unique key prop for list items to optimize rendering. This does not get passed to the component.
+                        // Arrow functions are used to create a new function that calls handleDeleteTask and handleCompleteTask with the specific id
+                        onDelete={() => handleDeleteTask(todo.id)} 
                         onComplete={() => handleCompleteTask(todo.id)}
                     />
                 ))}
             </ul>
+            {/* The TodoForm, found in the same directory, component is responsible for rendering the input field and handling form submission */}
             <TodoForm onAdd={handleAddTask} />
         </div>
     )   
 }
-
-
-
