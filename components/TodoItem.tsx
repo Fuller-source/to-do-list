@@ -11,7 +11,7 @@ interface TodoItemProps{
     todo: Todo;
     onComplete: (id: number) =>void;
     onDelete: (id: number) => void;
-    
+    onReorder: (id: number, direction: 'up' | 'down') => void;
 }
 
 /**
@@ -22,7 +22,7 @@ interface TodoItemProps{
  * @param param0 - The props for the component
  * @returns JSX.Element
  */
-export const TodoItem = ({todo, onDelete, onComplete}: TodoItemProps) => {
+export const TodoItem = ({todo, onDelete, onComplete, onReorder}: TodoItemProps) => {
     return (
         // The list item is styled with Tailwind CSS
         <li className="my-1 border-black border-5 flex items-center rounded-2xl justify-between bg-paledogwood min-h-[58px] w-full">
@@ -60,6 +60,23 @@ export const TodoItem = ({todo, onDelete, onComplete}: TodoItemProps) => {
             >
                 {todo.task}
             </span>
+            {/* Directional buttons */}
+            <div className="flex flex-col items-center ml-4 space-y-2">
+                <button
+                    onClick={() => onReorder(todo.id, 'up')}
+                    className="text-black hover:text-white transition duration-200"
+                >
+                    ▲
+                </button>
+
+                <button
+                    onClick={() => onReorder(todo.id, 'down')}
+                    className="text-black hover:text-white transition duration-200"
+                >
+                    ▼
+                </button>
+            </div>
+
             {/* Delete button */}
             <button
                 className="hover:bg-red hover:text-white rounded-r-lg self-stretch px-4 text-black ml-4 transition ease-in-out duration-200"

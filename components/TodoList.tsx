@@ -84,6 +84,25 @@ export function List(){
     }
 
     /**
+     * Handles the reordering of todos when the user clicks the up or down buttons.
+     * @param id The id of the todo to move.
+     * @param direction The direction to move the todo (up or down).
+     * @returns void
+     */
+    function handleReorderTask(id: number, direction: 'up' | 'down'){
+        const index: number = (todos.findIndex(todo => todo.id === id));
+        if ((index === 0 && direction === 'up') || (index === todos.length - 1 && direction === 'down')) {
+            return
+        } else {
+            const newIndex = (direction === 'up') ? index - 1 : index + 1
+            const todosCopy = [...todos]
+            const [removedTodo] = todosCopy.splice(index, 1) // Remove the particular todo and get it
+            todosCopy.splice(newIndex, 0, removedTodo)  // Re-insert the item
+            setTodos(todosCopy)
+        }
+    }
+
+    /**
      * The component's render method. It returns JSX that defines the UI.
      * It maps over the todos array to render a TodoItem for each task,
      * passing down the necessary props and handlers.
@@ -100,6 +119,7 @@ export function List(){
                         // Arrow functions are used to create a new function that calls handleDeleteTask and handleCompleteTask with the specific id
                         onDelete={() => handleDeleteTask(todo.id)} 
                         onComplete={() => handleCompleteTask(todo.id)}
+                        onReorder={handleReorderTask} // Passing the reorder handler directly, since it already takes the id as an argument and direction
                     />
                 ))}
             </ul>
