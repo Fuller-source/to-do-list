@@ -78,12 +78,15 @@ export function List(){
      * @param newIndex 
      */
     function handleDragEnd(oldIndex: number, newIndex: number){
-        const todosCopy = [...todos]
-        if (newIndex !== oldIndex){
-            const [removedtodo] = todosCopy.splice(oldIndex, 1)
-            todosCopy.splice(newIndex, 0, removedtodo)
-            setTodos(todosCopy)
-        }
+        setTodos(currentTodos => {
+            const newTodos = [...currentTodos]
+            if (newIndex !== oldIndex){
+                const [removedtodo] = newTodos.splice(oldIndex, 1)
+                newTodos.splice(newIndex, 0, removedtodo)
+            }
+            return newTodos;
+        })
+        
     }
 
     /**
