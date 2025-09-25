@@ -28,7 +28,7 @@ export const TodoItem = ({todo, onDelete, onComplete, onReorder}: TodoItemProps)
         <li className="draggable-item my-1 border-black border-5 flex items-center rounded-2xl justify-between bg-paledogwood min-h-[58px] w-full">
             
             {/* Drag handle */}
-            <div className="drag-handle flex items-center justify-center px-1 cursor-grab">
+            <div className="drag-handle flex items-center justify-center px-3 cursor-grab">
                 <div className="space-y-1">
                     <div className="w-4 h-0.5 bg-onyx"></div>
                     <div className="w-4 h-0.5 bg-onyx"></div>
