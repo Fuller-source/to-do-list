@@ -25,9 +25,19 @@ interface TodoItemProps{
 export const TodoItem = ({todo, onDelete, onComplete, onReorder}: TodoItemProps) => {
     return (
         // The list item is styled with Tailwind CSS
-        <li className="my-1 border-black border-5 flex items-center rounded-2xl justify-between bg-paledogwood min-h-[58px] w-full">
+        <li className="draggable-item my-1 border-black border-5 flex items-center rounded-2xl justify-between bg-paledogwood min-h-[58px] w-full">
+            
+            {/* Drag handle */}
+            <div className="drag-handle flex items-center justify-center px-1 cursor-grab">
+                <div className="space-y-1">
+                    <div className="w-4 h-0.5 bg-onyx"></div>
+                    <div className="w-4 h-0.5 bg-onyx"></div>
+                    <div className="w-4 h-0.5 bg-onyx"></div>
+                </div>
+            </div>
+
             {/* The label wraps the checkbox and the task text */}
-            <label className="flex items-center p-4 cursor-pointer">
+            <label className="flex items-center p-0.5 cursor-pointer">
                 <input
                     type="checkbox"
                     checked={todo.completed}
@@ -64,14 +74,14 @@ export const TodoItem = ({todo, onDelete, onComplete, onReorder}: TodoItemProps)
             <div className="flex flex-row items-center ml-4 space-x-3">
                 <button
                     onClick={() => onReorder(todo.id, 'up')}
-                    className="text-black hover:text-white transition duration-200"
+                    className="text-black hover:text-white transition duration-200 cursor-pointer"
                 >
                     ▲
                 </button>
 
                 <button
                     onClick={() => onReorder(todo.id, 'down')}
-                    className="text-black hover:text-white transition duration-200"
+                    className="text-black hover:text-white transition duration-200 cursor-pointer"
                 >
                     ▼
                 </button>
@@ -79,7 +89,7 @@ export const TodoItem = ({todo, onDelete, onComplete, onReorder}: TodoItemProps)
 
             {/* Delete button */}
             <button
-                className="hover:bg-red hover:text-white rounded-r-lg self-stretch px-4 text-black ml-4 transition ease-in-out duration-200"
+                className="hover:bg-red hover:text-white rounded-r-lg self-stretch px-4 text-black ml-4 transition ease-in-out duration-200 cursor-pointer"
                 onClick={() => onDelete(todo.id)}
             >
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">

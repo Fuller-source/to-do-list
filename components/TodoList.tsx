@@ -51,13 +51,16 @@ export function List(){
      * Initializes Sortable.js on the <ul> element.
      */
     useEffect(() => {
+        let sortableInstance: Sortable | null = null;
 
         // Ensure ref is attached to the Dom element before init
         if (listRef.current){
-            Sortable.create(listRef.current, {
+            sortableInstance = Sortable.create(listRef.current, {
                 animation: 150,
                 // This class is applied to dragged item for visual feedback
                 ghostClass: 'sortable-ghost',
+                handle: '.drag-handle',
+                draggable: '.draggable-item',
                 // Crucial: this tells Sortable what to do when an item is dropped
                 onUpdate: function(evt){
                     /// Included type checks to satisfy TypeScript's safety requirements for SortableJS event properties.
@@ -70,6 +73,11 @@ export function List(){
                 },
             })
         }
+        return () => {
+        if (sortableInstance) {
+            sortableInstance.destroy();
+        }
+    };
     },[listRef]) // Setting this dependency to satisfy React's linter
 
     /**
