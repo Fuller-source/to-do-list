@@ -1,9 +1,10 @@
 'use client' // This tells next that the component needs to run in browser, giving it access to browser APIs like local storage
              // This is essential because this component uses useState and useEffect, which are client-side hooks.
 
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import { TodoForm } from './TodoForm'
 import { TodoItem } from './TodoItem'
+import Sortable from 'sortablejs'
 
 /**
  * Defining the shape of a to-do item using a TypeScript interface.
@@ -22,7 +23,8 @@ export interface Todo{
  * and renders the list of tasks along with the form to add new ones.
  */
 export function List(){
-    const [todos, setTodos] = useState<Todo[]>([]); // initializes the component's state. todos holds the list of tasks. setTodos is the function I use to update it.
+    const [todos, setTodos] = useState<Todo[]>([]) // initializes the component's state. todos holds the list of tasks. setTodos is the function I use to update it.
+    const listRef = useRef(null)
 
     /**
      * This hook handles loading data.
@@ -44,6 +46,45 @@ export function List(){
     useEffect(() => {
         localStorage.setItem("todos", JSON.stringify(todos));
     },[todos]) // runs whenever todos changes
+
+    /**
+     * Initializes Sortable.js on the <ul> element.
+     */
+    useEffect(() => {
+
+        // Ensure ref is attached to the Dom element before init
+        if (listRef.current){
+            Sortable.create(listRef.current, {
+                animation: 150,
+                // This class is applied to dragged item for visual feedback
+                ghostClass: 'sortable-ghost',
+                // Crucial: this tells Sortable what to do when an item is dropped
+                onUpdate: function(evt){
+                    /// Included type checks to satisfy TypeScript's safety requirements for SortableJS event properties.
+                    const oldIndex = evt.oldIndex
+                    const newIndex = evt.newIndex
+
+                    if (oldIndex !== undefined && newIndex !== undefined){
+                        handleDragEnd(oldIndex, newIndex)
+                    }
+                },
+            })
+        }
+    },[listRef]) // Setting this dependency to satisfy React's linter
+
+    /**
+     * Properly doc
+     * @param oldIndex 
+     * @param newIndex 
+     */
+    function handleDragEnd(oldIndex: number, newIndex: number){
+        const todosCopy = [...todos]
+        if (newIndex !== oldIndex){
+            const [removedtodo] = todosCopy.splice(oldIndex, 1)
+            todosCopy.splice(newIndex, 0, removedtodo)
+            setTodos(todosCopy)
+        }
+    }
 
     /**
      * This function is called when a new task is submitted. It modifies the state in an immutable way.
@@ -110,7 +151,7 @@ export function List(){
      */
     return (
         <div className="w-full max-w-md">
-            <ul>
+            <ul ref={listRef}>
                 {todos.map((todo) => (
                     // This component represents a single to-do item in the list. It receives the todo object and the handlers as props. It passes the id to the handlers so they know which task to act on. The onDelete and onComplete props are functions that get called when the user interacts with the item.
                     <TodoItem
@@ -119,7 +160,7 @@ export function List(){
                         // Arrow functions are used to create a new function that calls handleDeleteTask and handleCompleteTask with the specific id
                         onDelete={() => handleDeleteTask(todo.id)} 
                         onComplete={() => handleCompleteTask(todo.id)}
-                        onReorder={handleReorderTask} // Passing the reorder handler directly, since it already takes the id as an argument and direction
+                        onReorder={handleReorderTask} // Passing the reorder handler directly, since it already takes the id as an argument and direction                        
                     />
                 ))}
             </ul>

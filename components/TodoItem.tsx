@@ -61,7 +61,7 @@ export const TodoItem = ({todo, onDelete, onComplete, onReorder}: TodoItemProps)
                 {todo.task}
             </span>
             {/* Directional buttons */}
-            <div className="flex flex-col items-center ml-4 space-y-2">
+            <div className="flex flex-row items-center ml-4 space-x-3">
                 <button
                     onClick={() => onReorder(todo.id, 'up')}
                     className="text-black hover:text-white transition duration-200"
