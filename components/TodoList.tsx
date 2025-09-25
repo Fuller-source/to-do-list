@@ -49,6 +49,10 @@ export function List(){
 
     /**
      * Initializes Sortable.js on the <ul> element.
+     * Manages drag-and-drop reordering of the to-do items.
+     * The onUpdate event is crucial as it triggers when an item is dropped in a new position.
+     * It calls handleDragEnd with the old and new indices to update the state accordingly. It also cleans up the Sortable instance when the component unmounts
+     * to prevent memory leaks and unintended side effects.
      */
     useEffect(() => {
         let sortableInstance: Sortable | null = null;
@@ -59,8 +63,8 @@ export function List(){
                 animation: 150,
                 // This class is applied to dragged item for visual feedback
                 ghostClass: 'sortable-ghost',
-                handle: '.drag-handle',
-                draggable: '.draggable-item',
+                handle: '.drag-handle', // Restricts dragging to elements with this class
+                draggable: '.draggable-item', // Specifies which items are draggable
                 // Crucial: this tells Sortable what to do when an item is dropped
                 onUpdate: function(evt){
                     /// Included type checks to satisfy TypeScript's safety requirements for SortableJS event properties.
@@ -73,15 +77,20 @@ export function List(){
                 },
             })
         }
+        // Cleanup function to destroy the Sortable instance when the component unmounts
+        // This prevents memory leaks and unintended side effects
         return () => {
         if (sortableInstance) {
-            sortableInstance.destroy();
+            sortableInstance.destroy(); //remove event listeners and free up resources
         }
     };
     },[listRef]) // Setting this dependency to satisfy React's linter
 
     /**
-     * Properly doc
+     * This function handles the logic for reordering todos in the state array.
+     * It takes the old and new indices of the moved item, creates a copy of the current todos array,
+     * removes the item from its old position, and inserts it at the new position.
+     * Finally, it updates the state with the new array, similarly to the reordering logic in handleReorderTask.
      * @param oldIndex 
      * @param newIndex 
      */
